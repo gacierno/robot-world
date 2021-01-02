@@ -1,0 +1,2 @@
+class Engine < CarPart
+end

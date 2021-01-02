@@ -1,0 +1,2 @@
+class Chasiss < CarPart
+end

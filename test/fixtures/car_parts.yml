@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  brand: MyString
+  defective_part: false
+  serial_number: 1
+  car: one
+
+two:
+  brand: MyString
+  defective_part: false
+  serial_number: 1
+  car: two

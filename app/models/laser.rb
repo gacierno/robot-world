@@ -1,0 +1,2 @@
+class Laser < CarPart
+end

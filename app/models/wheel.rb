@@ -1,0 +1,2 @@
+class Wheel < CarPart
+end
