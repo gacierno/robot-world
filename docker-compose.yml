@@ -27,3 +27,5 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    environment:
+      APP_HOME : /myapp

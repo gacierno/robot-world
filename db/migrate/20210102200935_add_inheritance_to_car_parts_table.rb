@@ -1,0 +1,5 @@
+class AddInheritanceToCarPartsTable < ActiveRecord::Migration[5.2]
+  def change
+  	add_column :car_parts, :type, :string
+  end
+end
