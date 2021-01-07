@@ -8,6 +8,9 @@ rm -f /myapp/tmp/pids/server.pid
 rake db:create
 rake db:migrate
 
+# Generate content to models table if its empty
+rake dataload:models
+
 # Start/Launch Cron Jobs
 service cron start
 

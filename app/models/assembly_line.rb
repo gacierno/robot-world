@@ -5,7 +5,7 @@ class AssemblyLine
 		@@cars.push( car )
 	end
 
-	def self.remove_car_rom_line car
+	def self.remove_car_from_line car
 		@@cars.delete( car )
 	end
 

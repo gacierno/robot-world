@@ -5,6 +5,16 @@ class Car < ApplicationRecord
 	has_one :laser
 	has_one :engine
 	has_one :computer
+	belongs_to :model
+
+	scope :in_progress, -> { where( :storage => nil ) }
+	scope :uninspected, -> { where( :storage => 0 ) }
+	scope :rejected, -> { where( :storage => 1 ) }
+	scope :approved, -> { where( :storage => 2 ) }
+	scope :on_sale, -> { where( :storage => 3 ) }
+
+	scope :by_model_name, -> ( _model ) { joins(:model).where( "models.name = ?", _model ) }
+	scope :by_model_id, -> ( _id ) { where( "model_id = ?", _id ) }
 
 	def year
 		created_at.year

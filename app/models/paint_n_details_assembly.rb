@@ -4,7 +4,7 @@ class PaintNDetailsAssembly < AssemblyLine
 		@@cars.each do | car | 
 			self.add_seats( car )
 			self.paint( car )
-			self.remove_car_rom_line( car )
+			self.remove_car_from_line( car )
 		end
 	end
 
