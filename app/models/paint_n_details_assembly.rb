@@ -4,6 +4,7 @@ class PaintNDetailsAssembly < AssemblyLine
 		@@cars.each do | car | 
 			self.add_seats( car )
 			self.paint( car )
+			self.set_car_as_uninspected( car )
 			self.remove_car_from_line( car )
 		end
 	end
@@ -18,6 +19,10 @@ class PaintNDetailsAssembly < AssemblyLine
 	def self.paint car
 		color = "#%02X%02X%02X" % [rand(1..255), rand(1..255), rand(1..255)] # create a random hexadecimal hash for web color
 		car.update( color:color )
+	end
+
+	def self.set_car_as_uninspected car
+		car.update( storage:0 )
 	end
 
 end

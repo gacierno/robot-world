@@ -27,3 +27,7 @@ set :environment, 'development'
 every 1.minutes do
 	rake "robot:builder"
 end
+
+every 30.minutes do
+	rake "robot:guard"
+end

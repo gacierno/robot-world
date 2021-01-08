@@ -41,7 +41,7 @@ class Car < ApplicationRecord
 			status = 1
 			if laser != nil && computer != nil
 				status = 2
-				if  seats.count == 2 && paint != nil
+				if  seats.count == 2 && color != nil
 					status = 3
 				end
 			end
