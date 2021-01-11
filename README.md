@@ -59,7 +59,7 @@ Making the robot execs happy would be a good idea, it would be great to pull the
 ---
 ### Dependencies
 
-**Docker**
+**Docker**  
 Running this project under a docker environment allows new users ( or reviewers ) to run the application avoiding versioning issues.
 
 **Dependencies installed inside docker container**
@@ -68,7 +68,7 @@ Running this project under a docker environment allows new users ( or reviewers 
 + Rails
 
 **Extra Gems**
-+ Whenever
++ Whenever  
   This gem makes chron jobs easier to create and run. Please visit its [repositry](https://github.com/javan/whenever)
 
 ---
