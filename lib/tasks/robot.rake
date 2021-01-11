@@ -29,6 +29,7 @@ namespace :robot do
 
 
 	namespace :guard do
+		
 		# This task will be executed every minute by robot guard to reject cars with defects
 		task :inspect_cars => :environment do
 

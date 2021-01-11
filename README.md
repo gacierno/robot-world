@@ -53,7 +53,39 @@ Making the robot execs happy would be a good idea, it would be great to pull the
 + Don't hesitate to ask, we are here to help.
 + We use Rails and Postgres. The Postgres DB is mandatory for this challenge, but as this challenge doesn't have front-end, if you feel comfortable using plain ruby it's fine (if you decide to use a framework the only allowed is Rails). 
 
+---
 
+## Robot World ( The Challenge )
+---
+### Dependencies
+
+**Docker**
+Running this project under a docker environment allows new users ( or reviewers ) to run the application avoiding versioning issues.
+
+**Dependencies installed inside docker container**
++ Ruby
++ Postgres
++ Rails
+
+**Extra Gems**
++ Whenever
+  This gem makes chron jobs easier to create and run. Please visit its [repositry](https://github.com/javan/whenever)
+
+---
+### Start Up
+
++ To run this app for the first time you need to run
+`$ docker-compose build`
+
++ After the build is completed run
+`$ docker-compose up`
+
++ To stop the app
+`$ docker-compose stop`
+
++ To run it again
+`$ docker-compose up`
+---
 
 
 
