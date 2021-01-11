@@ -56,8 +56,8 @@ Making the robot execs happy would be a good idea, it would be great to pull the
 ---
 
 ## Robot World ( The Challenge )
----
-### Dependencies
+
+## Dependencies
 
 **Docker**  
 Running this project under a docker environment allows new users ( or reviewers ) to run the application avoiding versioning issues.
@@ -71,21 +71,45 @@ Running this project under a docker environment allows new users ( or reviewers 
 + Whenever  
   This gem makes chron jobs easier to create and run. Please visit its [repositry](https://github.com/javan/whenever)
 
----
-### Start Up
+## Start Up
 
-+ To run this app for the first time you need to run
++ To run this app for the first time you need to run  
 `$ docker-compose build`
 
-+ After the build is completed run
++ After the build is completed run  
 `$ docker-compose up`
 
-+ To stop the app
++ To stop the app  
 `$ docker-compose stop`
 
-+ To run it again
++ To run it again  
 `$ docker-compose up`
----
+
+## Tasks
+
+Inside the aplication there are 4 tasks created to work as robots
+
++ Robot Builder  
+   To run this task on demand use  
+   `$ rake robot:builder` inside the container or  
+   `$ docker-compose run web rake robot:builder` from your terminal
+
++ Robot Guard  
+   This robot has 2 tasks to do, inspect cars and move the approved cars from factory stock to store stock  
+   To inspect cars run  
+   `$ rake bobot:guard:inspect_cars` or `$ docker-compose run web rake robot:guard:inspect_cars`  
+   To move the cars run  
+   `$ rake bobot:guard:move_cars` or `$ docker-compose run web rake robot:guard:move_cars` 
+
++ Robot Buyer  
+   To run this task use  
+   `$ rake robot:buyer` inside the container or  
+   `$ docker-compose run web rake robot:buyer` from tour terminal
+
+
+
+
+
 
 
 
