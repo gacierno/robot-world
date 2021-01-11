@@ -28,8 +28,12 @@ every 1.minutes do
 	rake "robot:builder"
 end
 
+every 1.minutes do
+	rake "robot:guard:inspect_cars"
+end
+
 every 30.minutes do
-	rake "robot:guard"
+	rake "robot:guard:move_cars"
 end
 
 every 1.minutes do

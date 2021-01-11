@@ -26,41 +26,47 @@ namespace :robot do
 	end
 
 
-	# This task will be executed every 30 minutes by robot guard to reject cars with defects and move approved cars to store stock
-	task :guard => :environment do
 
-		# Inspect the cars at the warehouse
-		uninspected_cars = WareHouse.get_uninspected_cars
 
-		uninspected_cars.each do |car|
-			if car.check_computer == -1 then  	# it means that the car isn't finished
-				car.update( storage:nil )		# send it back to "in_progress"
+	namespace :guard do
+		# This task will be executed every minute by robot guard to reject cars with defects
+		task :inspect_cars => :environment do
 
-			elsif car.check_computer == 0 then	# it means the car passed the test
-				car.update( storage:2 )  # putting storage == 2 instead of 3 to simulate 2 different stocks (warehouse and saleroom)
-			
-			else
-				car.update( storage:1 )			# it means the car has at least 1 defect
-				# send_car data to slack
+			# Inspect the cars at the warehouse
+			uninspected_cars = WareHouse.get_uninspected_cars
+
+			uninspected_cars.each do |car|
+				if car.check_computer == -1 then  	# it means that the car isn't finished
+					car.update( storage:nil )		# send it back to "in_progress"
+
+				elsif car.check_computer == 0 then	# it means the car passed the test
+					car.update( storage:2 )  # putting storage == 2 instead of 3 to simulate 2 different stocks (warehouse and saleroom)
+				
+				else
+					car.update( storage:1 )			# it means the car has at least 1 defect
+					# send_car data to slack
+				end
 			end
-		end
-		uninspected_cars = []	# empty array to save memory
+			uninspected_cars = []	# empty array to save memory
+			puts "tested cars"
 
-
-		puts "tested cars"
-		# Adding another step to simulate we have two different stocks so storage == 2 are stil at warehouse while storage == 3 are on salesroom
-
-
-		# Move aproved cars to salesroom
-		approved_cars = WareHouse.get_approved_cars
-
-		approved_cars.each do |car| 
-			car.update( storage:3 )
 		end
 
-		puts "moved cars"
+		# This task will be executed every 30 minutes by robot guard to move approved cars to store stock
+		task :move_cars => :environment do
+			# Move aproved cars to salesroom
+			approved_cars = WareHouse.get_approved_cars
 
+			approved_cars.each do |car| 
+				car.update( storage:3 )
+			end
+
+			approved_cars = []	# empty array to save memory
+			puts "moved cars"
+
+		end
 	end
+
 
 
 
@@ -87,6 +93,7 @@ namespace :robot do
 
 		end
 	end
+
 
 end
 
