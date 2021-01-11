@@ -12,6 +12,7 @@ class Car < ApplicationRecord
 	scope :rejected, -> { where( :storage => 1 ) }
 	scope :approved, -> { where( :storage => 2 ) }
 	scope :on_sale, -> { where( :storage => 3 ) }
+	scope :sold, -> { where( :storage => 4 ) }
 
 	scope :by_model_name, -> ( _model ) { joins(:model).where( "models.name = ?", _model ) }
 	scope :by_model_id, -> ( _id ) { where( "model_id = ?", _id ) }

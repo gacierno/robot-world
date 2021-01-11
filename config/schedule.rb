@@ -31,3 +31,7 @@ end
 every 30.minutes do
 	rake "robot:guard"
 end
+
+every 1.minutes do
+	rake "robot:buyer"
+end

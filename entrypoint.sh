@@ -11,6 +11,12 @@ rake db:migrate
 # Generate content to models table if its empty
 rake dataload:models
 
+# Create cron jobs from whenever gem
+whenever --update-crontab
+
+# List active cron jobs ready 
+crontab -l
+
 # Start/Launch Cron Jobs
 service cron start
 

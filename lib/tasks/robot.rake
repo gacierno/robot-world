@@ -26,7 +26,7 @@ namespace :robot do
 	end
 
 
-	# This task will be executed every 30 minutes by robot guard to reject cars with defects
+	# This task will be executed every 30 minutes by robot guard to reject cars with defects and move approved cars to store stock
 	task :guard => :environment do
 
 		# Inspect the cars at the warehouse
@@ -61,5 +61,42 @@ namespace :robot do
 		puts "moved cars"
 
 	end
+
+
+
+	# This task will be executed every minute by robot buyer to buy cars from store stcok
+	task :buyer => :environment do
+
+		robot_buyer_id = 1001 	#this is a hardcodded id for this robot, it can become a customer id
+		
+		max_cars_allowed_to_buy = 10
+		qty_to_buy = rand(1..max_cars_allowed_to_buy)
+
+		qty_to_buy.times do
+			model_to_buy = rand(1..10)
+			car_to_buy = SalesRoom.get_a_car_by_model_id model_to_buy
+
+			if car_to_buy != nil
+				# if the car exists robot will buy it
+				SalesRoom.create_order car_to_buy, robot_buyer_id
+				puts "Car buyed " + car_to_buy.model.name
+			else
+				mod = Model.where( :id => model_to_buy ).first
+				puts "Robot buyer id=" + robot_buyer_id.to_s + " tryed to buy a " + mod.name + " but there wasn't any on stock" 
+			end
+
+		end
+	end
+
 end
+
+
+
+
+
+
+
+
+
+
 

@@ -12,12 +12,6 @@ COPY . /myapp
 RUN chmod 0744 /etc/crontab
 RUN chmod 0744 /myapp
 
-# Create cron jobs from whenever gem
-RUN whenever --update-crontab
-
-# List active cron jobs ready 
-RUN crontab -l
-
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
