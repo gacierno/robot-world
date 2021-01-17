@@ -66,6 +66,7 @@ Running this project under a docker environment allows new users ( or reviewers 
 + Ruby
 + Postgres
 + Rails
++ Adminer
 
 **Extra Gems**
 + Whenever  
@@ -89,22 +90,22 @@ Running this project under a docker environment allows new users ( or reviewers 
 
 Inside the aplication there are 4 tasks created to work as robots
 
-+ Robot Builder  
++ **Robot Builder**  
    To run this task on demand use  
    `$ rake robot:builder` inside the container or  
    `$ docker-compose run web rake robot:builder` from your terminal
 
-+ Robot Guard  
++ **Robot Guard**  
    This robot has 2 tasks to do, inspect cars and move the approved cars from factory stock to store stock  
    To inspect cars run  
    `$ rake bobot:guard:inspect_cars` or `$ docker-compose run web rake robot:guard:inspect_cars`  
    To move the cars run  
    `$ rake bobot:guard:move_cars` or `$ docker-compose run web rake robot:guard:move_cars` 
 
-+ Robot Buyer  
++ **Robot Buyer**  
    To run this task use  
    `$ rake robot:buyer` inside the container or  
-   `$ docker-compose run web rake robot:buyer` from tour terminal
+   `$ docker-compose run web rake robot:buyer` from your terminal
 
 
 
