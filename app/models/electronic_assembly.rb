@@ -4,6 +4,7 @@ class ElectronicAssembly < AssemblyLine
 		@@cars.each do | car | 
 			self.add_laser( car )
 			self.add_computer( car )
+			car.save
 		end
 	end
 

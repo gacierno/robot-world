@@ -1,11 +1,11 @@
 class PaintNDetailsAssembly < AssemblyLine
-
+	
 	def self.process_cars
-		@@cars.each do | car | 
+		@@cars.each do | car |
 			self.add_seats( car )
 			self.paint( car )
 			self.set_car_as_uninspected( car )
-			self.remove_car_from_line( car )
+			car.save
 		end
 	end
 

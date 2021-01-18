@@ -25,7 +25,11 @@ set :output, '/myapp/cron.log' # log location
 set :environment, 'development'
 
 every 1.minutes do
-	rake "robot:builder"
+	rake "robot:builder:start"
+end
+
+every 1.days do
+	rake "robot:builder:cleanup"
 end
 
 every 1.minutes do

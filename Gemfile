@@ -40,7 +40,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'whenever'
 gem 'chronic'
 
+# Pretty table output on rails console
 gem 'hirb'
+
+# Easy connect to SLACK API
+gem "slack-notifier"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

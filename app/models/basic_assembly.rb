@@ -1,10 +1,11 @@
 class BasicAssembly < AssemblyLine
 
-	def self.process_cars
-		@@cars.each do | car | 
+	def self.process_cars 
+		@@cars.each do | car |
 			self.add_chassis( car )
 			self.add_engine( car )
 			self.add_wheels( car )
+			car.save
 		end
 	end
 

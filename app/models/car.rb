@@ -1,4 +1,5 @@
 class Car < ApplicationRecord
+
 	has_many :wheels
 	has_many :seats
 	has_one :chassis
@@ -37,17 +38,16 @@ class Car < ApplicationRecord
 
 	def check_car_build_stage
 
-		status = 0
-		if wheels.count == 4 && chassis != nil && engine != nil
+		if seats.count == 2 && color != nil then
+			status = 3
+		elsif laser != nil && computer != nil then
+			status = 2
+		elsif wheels.count == 4 && chassis != nil && engine != nil then
 			status = 1
-			if laser != nil && computer != nil
-				status = 2
-				if  seats.count == 2 && color != nil
-					status = 3
-				end
-			end
+		else
+			status = 0
 		end
-
+	
 		return	status
 
 	end

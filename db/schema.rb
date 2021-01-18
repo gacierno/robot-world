@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_10_234553) do
+ActiveRecord::Schema.define(version: 2021_01_17_195317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,6 @@ ActiveRecord::Schema.define(version: 2021_01_10_234553) do
   end
 
   create_table "cars", force: :cascade do |t|
-    t.float "price"
-    t.float "cost_price"
     t.integer "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -42,6 +40,8 @@ ActiveRecord::Schema.define(version: 2021_01_10_234553) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "price"
+    t.float "cost_price"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2021_01_10_234553) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "buyer"
+    t.float "order_car_price"
+    t.float "order_car_cost"
     t.index ["car_id"], name: "index_orders_on_car_id"
   end
 
