@@ -9,6 +9,10 @@ class AssemblyLine
 		@@cars.delete( car )
 	end
 
+	def self.drop_lines
+		@@cars = []
+	end
+
 	def self.process_cars
 	end
 end
