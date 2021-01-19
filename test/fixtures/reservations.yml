@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car: one
+  delivered: false
+  buyer: 1
+
+two:
+  car: two
+  delivered: false
+  buyer: 1

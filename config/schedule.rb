@@ -40,6 +40,10 @@ every 30.minutes do
 	rake "robot:guard:move_cars"
 end
 
+every 30.minutes do
+	rake "robot:car_delivery"
+end
+
 every 1.minutes do
 	rake "robot:buyer"
 end

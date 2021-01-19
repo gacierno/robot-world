@@ -105,10 +105,37 @@ namespace :robot do
 			else
 				mod = Model.where( :id => model_to_buy ).first
 				puts "At "+ Time.now.to_s + " Robot buyer id=" + robot_buyer_id.to_s + " tryed to buy a " + mod.name + " but there wasn't any on stock" 
+
+				# Search the car on factory stock
+				car_to_reserve = Car.by_model_id( model_to_buy ).approved.not_reserved.first
+
+				if car_to_reserve != nil
+					SalesRoom.create_reservation car_to_reserve, robot_buyer_id
+				end
+
 			end
 
 		end
 	end
+
+	
+
+
+	task :car_delivery => :environment do
+
+		reservations = Reservation.pending
+
+		reservations.each do |res|
+			reserved_car = Car.find( res.car_id )
+			if reserved_car.storage == 3 # means it is on store
+				SalesRoom.create_order reserved_car, res.buyer
+				res.update( delivered:true )
+			end
+		end 
+	end
+
+
+
 
 end
 

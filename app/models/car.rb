@@ -8,6 +8,8 @@ class Car < ApplicationRecord
 	has_one :computer
 	belongs_to :model
 
+	has_one :reservation
+
 	scope :in_progress, -> { where( :storage => nil ) }
 	scope :uninspected, -> { where( :storage => 0 ) }
 	scope :rejected, -> { where( :storage => 1 ) }
@@ -17,6 +19,17 @@ class Car < ApplicationRecord
 
 	scope :by_model_name, -> ( _model ) { joins(:model).where( "models.name = ?", _model ) }
 	scope :by_model_id, -> ( _id ) { where( "model_id = ?", _id ) }
+
+	# as we have reservations system will need to know if thew car is reserved to be sure about no to sell a reserved car or reserve it twice 
+	scope :not_reserved, -> { joins("LEFT JOIN reservations ON cars.id = reservations.car_id").where( "reservations.id IS ?", nil ) }
+
+	def reserved
+		if reservation == nil || reservation.delivered == true
+			return false
+		else
+			return true
+		end
+	end
 
 	def year
 		created_at.year
