@@ -135,7 +135,7 @@ To manage product changes it's important to set the steps and rules for this pro
    2. **The new car isn't on store but it is on factory stock** 
       Then system will create the change order and a reservation for the new car. The order will be created when the car arrives to the store.
    3. **The new car isn't available the store or factory**
-      The order will be created but will be on hold until a car of the required model is manufactured and verified. Then system will create a reservation following item **2**.
+      The order will be created but will be on hold until a car of the required model is manufactured and verified. Then system will create a reservation following item **ii**.
       While the order is on hold a robot will check aproved cars to find the required car
 
 
