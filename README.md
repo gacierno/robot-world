@@ -105,9 +105,12 @@ Inside the aplication there are 6 tasks created to work as robots
    `$ rake bobot:guard:move_cars` or `$ docker-compose run web rake robot:guard:move_cars` 
 
 + **Robot Buyer**  
-   To run this task use  
-   `$ rake robot:buyer` inside the container or  
-   `$ docker-compose run web rake robot:buyer` from your terminal
+   To buy cars on demand use  
+   `$ rake robot:buyer:buy_cars` inside the container or  
+   `$ docker-compose run web rake robot:buyer:buy_cars` from your terminal  
+   To change a random car user  
+   `$ rake robot:buyer:ask_for_a_car_change` inside the container or  
+   `$ docker-compose run web rake robot:buyer:ask_for_a_car_change` from your terminal
 
 + **Robot Car Delivery**  
    To deliver reserved cars that are on the store 
@@ -134,9 +137,8 @@ To manage product changes it's important to set the steps and rules for this pro
       Then the chage will be done instantly. Creating the change order and the new order with the new car. 
    2. **The new car isn't on store but it is on factory stock**  
       Then system will create the change order and a reservation for the new car. The order will be created when the car arrives to the store.
-   3. **The new car isn't available the store or factory**  
-      The order will be created but will be on hold until a car of the required model is manufactured and verified. Then system will create a reservation following item **ii**.  
-      While the order is on hold a robot will check aproved cars to find the required car
+   3. **The new car isn't available in the store or factory**  
+      Unfortunately the change won't be done
 
 
 

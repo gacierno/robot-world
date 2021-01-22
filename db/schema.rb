@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_19_214043) do
+ActiveRecord::Schema.define(version: 2021_01_21_230509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(version: 2021_01_19_214043) do
     t.string "color"
     t.integer "storage"
     t.index ["model_id"], name: "index_cars_on_model_id"
+  end
+
+  create_table "change_orders", force: :cascade do |t|
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_change_orders_on_order_id"
   end
 
   create_table "models", force: :cascade do |t|
@@ -63,6 +70,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_214043) do
     t.index ["car_id"], name: "index_reservations_on_car_id"
   end
 
+  add_foreign_key "change_orders", "orders"
   add_foreign_key "orders", "cars"
   add_foreign_key "reservations", "cars"
 end

@@ -85,39 +85,100 @@ namespace :robot do
 
 
 
+	namespace :buyer do
 
-	# This task will be executed every minute by robot buyer to buy cars from store stcok
-	task :buyer => :environment do
 
-		robot_buyer_id = 1001 	#this is a hardcodded id for this robot, it can become a customer id
-		
-		max_cars_allowed_to_buy = 10
-		qty_to_buy = rand(1..max_cars_allowed_to_buy)
+		# This task will be executed every minute by robot buyer to buy cars from store stcok
+		task :buy_cars => :environment do
 
-		qty_to_buy.times do
-			model_to_buy = rand(1..10)
-			car_to_buy = SalesRoom.get_a_car_by_model_id model_to_buy
+			robot_buyer_id = 1001 	#this is a hardcodded id for this robot, it can become a customer id
+			
+			max_cars_allowed_to_buy = 10
+			qty_to_buy = rand(1..max_cars_allowed_to_buy)
 
-			if car_to_buy != nil
-				# if the car exists robot will buy it
-				SalesRoom.create_order car_to_buy, robot_buyer_id
-				# puts "Car buyed " + car_to_buy.model.name
-			else
-				mod = Model.where( :id => model_to_buy ).first
-				puts "At "+ Time.now.to_s + " Robot buyer id=" + robot_buyer_id.to_s + " tryed to buy a " + mod.name + " but there wasn't any on stock" 
+			qty_to_buy.times do
+				model_to_buy = rand(1..10)
+				car_to_buy = SalesRoom.get_a_car_by_model_id model_to_buy
 
-				# Search the car on factory stock
-				car_to_reserve = Car.by_model_id( model_to_buy ).approved.not_reserved.first
+				if car_to_buy != nil
+					# if the car exists robot will buy it
+					SalesRoom.create_order car_to_buy, robot_buyer_id
+					# puts "Car buyed " + car_to_buy.model.name
+				else
+					mod = Model.where( :id => model_to_buy ).first
+					puts "BUY      | At "+ Time.now.to_s + " Robot buyer id=" + robot_buyer_id.to_s + " tryed to buy a " + mod.name + " but there wasn't any on stock" 
 
-				if car_to_reserve != nil
-					SalesRoom.create_reservation car_to_reserve, robot_buyer_id
+					# Search the car on factory stock
+					car_to_reserve = Car.by_model_id( model_to_buy ).approved.not_reserved.first
+
+					if car_to_reserve != nil
+						SalesRoom.create_reservation car_to_reserve, robot_buyer_id
+					end
+
 				end
 
 			end
-
 		end
-	end
 
+		task :ask_for_a_car_change => :environment do
+
+			robot_buyer_id = 1001 	#this is a hardcodded id for this robot, it can become a customer id
+			
+			how_many_changes = rand( 0..5 )
+
+			how_many_changes.times do
+				puts "CHANGE   | Asking for a change"
+				# get a buyed car that will be changed
+				car_to_be_changed = Car.sold[ rand( 0...Car.sold.count ) ]
+
+				# get a diferent model from the car that is being changed
+				begin
+					new_model = rand(1..10)
+				end while new_model == car_to_be_changed.model_id
+
+				#get current car order
+				order_to_be_canceled = Order.where( car_id:car_to_be_changed.id ).first
+
+				new_car = SalesRoom.get_a_car_by_model_id new_model
+
+				if new_car != nil # there is a car abailable for change
+					
+					#cancel the old order
+					change_order = ChangeOrder.new order:order_to_be_canceled
+					change_order.save
+					
+					#set the car ready for sale
+					car_to_be_changed.storage = 3
+
+					# buy the new car
+					SalesRoom.create_order new_car, robot_buyer_id
+
+					puts "CHANGE   | Car #{car_to_be_changed.id} changed by Car #{new_car.id}"
+				else
+					# if there isn't any car of the required model system will look for it on factory stock
+					car_to_reserve = Car.by_model_id( new_model ).approved.not_reserved.first
+
+					if car_to_reserve != nil # there is a car of this model on factory stock
+
+						#cancel the old order
+						change_order = ChangeOrder.new order:order_to_be_canceled
+						change_order.save
+						#set the car ready for sale
+						car_to_be_changed.storage = 3
+						#reserve the new car
+						SalesRoom.create_reservation car_to_reserve, robot_buyer_id
+						puts "CHANGE   | Car #{car_to_be_changed.id} changed by Car #{car_to_reserve.id}"
+					else
+						puts "CHANGE   | No car was changed"
+					end
+
+				end
+
+			end
+		end
+
+
+	end
 	
 
 

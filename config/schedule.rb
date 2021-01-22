@@ -45,5 +45,9 @@ every 30.minutes do
 end
 
 every 1.minutes do
-	rake "robot:buyer"
+	rake "robot:buyer:buy_cars"
+end
+
+every 1.hours do
+	rake "robot:buyer:ask_for_a_car_change"
 end
