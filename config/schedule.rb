@@ -51,3 +51,7 @@ end
 every 1.hours do
 	rake "robot:buyer:ask_for_a_car_change"
 end
+
+every 1.days do
+	rake "robot:execs"
+end

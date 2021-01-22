@@ -55,9 +55,9 @@ namespace :robot do
 				else
 					car.update( storage:1 )			# it means the car has at least 1 defect
 
-					reject_message = " => The car " + car.to_json + "has defects"
-					puts reject_message
+					reject_message = "BUILDER  | => The car " + car.to_json + "has defects"		
 
+					puts reject_message
 					# send_car data to slack
 					# notifier.ping reject_message
 
@@ -196,6 +196,39 @@ namespace :robot do
 	end
 
 
+
+
+
+	task :execs => :environment do
+
+		orders = Order.from_yesterday
+		change_orders = ChangeOrder.from_yesterday
+
+		#calculate incomes
+		revenue = 0
+		orders.each do |item|
+			revenue += item.order_car_price
+		end
+		change_orders.each do |item|
+			revenue -= item.order.order_car_price
+		end
+
+		#calculate how many cars were sold
+		sold_cars = orders.count - change_orders.count
+
+		#calculate average (avoid divide by 0)
+		if sold_cars != 0 && sold_cars != nil
+			average = revenue/sold_cars
+		else
+			average = 0
+		end
+
+		puts "EXECS    | "+Date.yesterday.to_s
+		puts "EXECS    | Revenue = "+revenue.to_s
+		puts "EXECS    | Sold Cars = "+sold_cars.to_s
+		puts "EXECS    | Average Price = "+average.to_s
+
+	end
 
 
 end

@@ -140,8 +140,11 @@ To manage product changes it's important to set the steps and rules for this pro
    3. **The new car isn't available in the store or factory**  
       Unfortunately the change won't be done
 
-
-
+## A plus (solved)
+Company will need a robot that at the end of the day give them some metrics to understand where the company is going.  
++ To get the daily revenue Robot will calculate the difference, ( in money ) between orders ( cars delivered ) and change orders ( canceled orders ). 
++ To get how many cars are sold Robot will calculate the difference, ( in cars ) between orders ( cars delivered ) and change orders ( canceled orders ).
++ To get the average will calculate the income divided by que cars ( both already calculated on 1 and 2 )  
 
 
 
