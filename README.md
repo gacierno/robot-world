@@ -86,6 +86,9 @@ Running this project under a docker environment allows new users ( or reviewers 
 + To run it again  
 `$ docker-compose up`
 
+## Class diagram
+![alt text](https://github.com/gacierno/robot-world/blob/Add-data-to-readme-file/UML.png "Class Diagram")
+
 ## Tasks
 
 Inside the aplication there are 6 tasks created to work as robots
