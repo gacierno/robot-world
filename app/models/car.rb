@@ -70,4 +70,24 @@ class Car < ApplicationRecord
 		return	status
 
 	end
+
+	def get_defective_parts
+		defective_parts = []
+		defective_parts << wheels.where( defective_part:true )
+		defective_parts << seats.where( defective_part:true )
+		if chassis.defective_part
+			defective_parts << chassis
+		end
+		if laser.defective_part
+			defective_parts << laser
+		end
+		if engine.defective_part
+			defective_parts << engine
+		end
+		if computer.defective_part
+			defective_parts << computer
+		end
+		return defective_parts
+	end
+
 end

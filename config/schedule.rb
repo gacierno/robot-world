@@ -55,3 +55,7 @@ end
 every 1.days do
 	rake "robot:execs"
 end
+
+every 1.days do
+	rake "robot:repairer"
+end

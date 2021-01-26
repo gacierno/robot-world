@@ -231,6 +231,29 @@ namespace :robot do
 
 	end
 
+	task :repairer => :environment do
+
+		cars_to_repair = Car.rejected
+
+		cars_to_repair.each do | item_car |
+
+			parts_to_repair = item_car.get_defective_parts
+
+			parts_to_repair.each do | item_part |
+			
+				# assume all parts can be repaired
+				# if it was not the case it is possible to put some code to represent this behavior
+				item_part.update( defective_part:false )
+			
+			end
+
+			item_car.update( storage:0 )
+
+			puts "REPAIRER | Tha Car "+item_car.to_s+" has been repaired"
+				 
+		end
+	end
+
 
 end
 
