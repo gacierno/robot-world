@@ -8,7 +8,8 @@ namespace :robot do
 			qty_to_build = 10
 
 			qty_to_build.times do
-				model = rand( 1..10 ) #select a model id betwen 1 to 10
+				models_qty = Model.all.count
+				model = rand( 1..models_qty ) #select a model id in the model list
 				c = Car.create( model_id:model )
 				BasicAssembly.add_car_to_line( c )
 			end

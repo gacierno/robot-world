@@ -146,6 +146,23 @@ Company will need a robot that at the end of the day give them some metrics to u
 + To get how many cars are sold Robot will calculate the difference, ( in cars ) between orders ( cars delivered ) and change orders ( canceled orders ).
 + To get the average will calculate the income divided by que cars ( both already calculated on 1 and 2 )  
 
+## RSpec
+Rspect has been implemented on the proyect to test all models that extend ApplicationRecord.  
+To run these tests use (inside the container):
++ `$ rspec spec/records/model_model_spec.rb` to test car models
++ `$ rspec spec/records/car_model_spec.rb` to test cars
++ `$ rspec spec/records/car_part_model_spec.rb` to test car parts
++ `$ rspec spec/records/order_model_spec.rb` to test orders
++ `$ rspec spec/records/reservation_model_spec.rb` to test reservations
++ `$ rspec spec/records/change_order_model_spec.rb` to test change orders
+To run these tests on terminal use:
++ `$ docker-compose run web rspec spec/records/model_model_spec.rb` to test car models
++ `$ docker-compose run web rspec spec/records/car_model_spec.rb` to test cars
++ `$ docker-compose run web rspec spec/records/car_part_model_spec.rb` to test car parts
++ `$ docker-compose run web rspec spec/records/order_model_spec.rb` to test orders
++ `$ docker-compose run web rspec spec/records/reservation_model_spec.rb` to test reservations
++ `$ docker-compose run web rspec spec/records/change_order_model_spec.rb` to test change orders
+
 
 
 

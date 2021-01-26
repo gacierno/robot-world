@@ -1,5 +1,12 @@
 class Order < ApplicationRecord
-  belongs_to :car
+	#references
+	belongs_to :car
 
-  scope :from_yesterday, -> { where( "DATE(created_at) = ?", Date.yesterday ) }
+	#scoped queries
+	scope :from_yesterday, -> { where( "DATE(created_at) = ?", Date.yesterday ) }
+
+	#validations
+	validates :car, :buyer, presence: true, on: :create
+	validates :buyer, numericality: { only_integer:true, greater_than:0 }
+	validates_associated :car
 end

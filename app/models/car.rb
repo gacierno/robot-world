@@ -1,5 +1,6 @@
 class Car < ApplicationRecord
 
+	# references
 	has_many :wheels
 	has_many :seats
 	has_one :chassis
@@ -10,6 +11,7 @@ class Car < ApplicationRecord
 
 	has_one :reservation
 
+	# scopes
 	scope :in_progress, -> { where( :storage => nil ) }
 	scope :uninspected, -> { where( :storage => 0 ) }
 	scope :rejected, -> { where( :storage => 1 ) }
@@ -22,6 +24,10 @@ class Car < ApplicationRecord
 
 	# as we have reservations system will need to know if thew car is reserved to be sure about no to sell a reserved car or reserve it twice 
 	scope :not_reserved, -> { joins("LEFT JOIN reservations ON cars.id = reservations.car_id").where( "reservations.id IS ?", nil ) }
+
+	# validations
+	validates :model, inclusion: { in: Model.all }
+	validates_associated :model
 
 	def reserved
 		if reservation == nil || reservation.delivered == true
