@@ -1,2 +1,0 @@
-class Seat < CarPart
-end

@@ -1,2 +1,0 @@
-class Chassis < CarPart
-end

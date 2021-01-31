@@ -1,2 +1,0 @@
-class Wheel < CarPart
-end

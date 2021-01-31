@@ -1,2 +1,0 @@
-class Laser < CarPart
-end
