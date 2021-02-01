@@ -21,7 +21,6 @@ class Car < ApplicationRecord
 	scope :not_reserved, -> { joins("LEFT JOIN reservations ON cars.id = reservations.car_id").where( "reservations.id IS ?", nil ) }
 
 	# validations
-	validates :model, inclusion: { in: Model.all }
 	validates_associated :model
 
 	def reserved

@@ -10,9 +10,7 @@ namespace :robot do
 			qty_to_build.times do
 				models_qty = Model.all.count
 				model = Model.all[ rand( 0...models_qty ) ] #select a model id in the model list
-				puts model.to_json
 				c = Car.create( model:model )
-				puts c.to_json
 				BasicAssembly.add_car_to_line( c )
 			end
 		

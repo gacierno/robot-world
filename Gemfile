@@ -67,6 +67,11 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+
+  #  Clean DB after tests
+  gem 'database_cleaner-active_record'
+  # gem 'database_cleaner-sequel'
+  
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
