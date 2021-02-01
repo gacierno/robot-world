@@ -163,19 +163,19 @@ Company will need a robot that at the end of the day give them some metrics to u
 ## RSpec
 Rspect has been implemented on the proyect to test all models that extend ApplicationRecord.  
 To run these tests use (inside the container):
-+ `$ rspec spec/records/model_model_spec.rb` to test car models
-+ `$ rspec spec/records/car_model_spec.rb` to test cars
-+ `$ rspec spec/records/car_part_model_spec.rb` to test car parts
-+ `$ rspec spec/records/order_model_spec.rb` to test orders
-+ `$ rspec spec/records/reservation_model_spec.rb` to test reservations
-+ `$ rspec spec/records/change_order_model_spec.rb` to test change orders
++ `$ rspec spec/models/model_spec.rb` to test car models
++ `$ rspec spec/models/car_spec.rb` to test cars
++ `$ rspec spec/models/car_part_spec.rb` to test car parts
++ `$ rspec spec/models/order_spec.rb` to test orders
++ `$ rspec spec/models/reservation_spec.rb` to test reservations
++ `$ rspec spec/models/change_order_spec.rb` to test change orders
 To run these tests on terminal use:
-+ `$ docker-compose run web rspec spec/records/model_model_spec.rb` to test car models
-+ `$ docker-compose run web rspec spec/records/car_model_spec.rb` to test cars
-+ `$ docker-compose run web rspec spec/records/car_part_model_spec.rb` to test car parts
-+ `$ docker-compose run web rspec spec/records/order_model_spec.rb` to test orders
-+ `$ docker-compose run web rspec spec/records/reservation_model_spec.rb` to test reservations
-+ `$ docker-compose run web rspec spec/records/change_order_model_spec.rb` to test change orders
++ `$ docker-compose run web rspec spec/models/model_spec.rb` to test car models
++ `$ docker-compose run web rspec spec/models/car_spec.rb` to test cars
++ `$ docker-compose run web rspec spec/models/car_part_spec.rb` to test car parts
++ `$ docker-compose run web rspec spec/models/order_spec.rb` to test orders
++ `$ docker-compose run web rspec spec/models/reservation_spec.rb` to test reservations
++ `$ docker-compose run web rspec spec/models/change_order_spec.rb` to test change orders
 
 ## An Extra (Robot Repairer)
 While time goes on, a lot of rejected cars are stored on warehouse. It reperesents a lot of lost money for the company.  
