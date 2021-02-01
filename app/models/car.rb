@@ -2,7 +2,6 @@ class Car < ApplicationRecord
 
 	# references
 	has_many :car_parts
-	has_one :computer
 	belongs_to :model
 
 	has_one :reservation
@@ -38,52 +37,52 @@ class Car < ApplicationRecord
 	end
 
 	def check_computer
-		if check_car_build_stage >= 3
-			defective_parts = 0
-			defective_parts += wheels.where( defective_part:true ).count
-			defective_parts += seats.where( defective_part:true ).count
-			defective_parts += chassis.defective_part ? 1 : 0
-			defective_parts += laser.defective_part ? 1 : 0
-			defective_parts += engine.defective_part ? 1 : 0
-			defective_parts += computer.defective_part ? 1 : 0
-		else
-			-1
-		end
+		# if check_car_build_stage >= 3
+		# 	defective_parts = 0
+		# 	defective_parts += wheels.where( defective_part:true ).count
+		# 	defective_parts += seats.where( defective_part:true ).count
+		# 	defective_parts += chassis.defective_part ? 1 : 0
+		# 	defective_parts += laser.defective_part ? 1 : 0
+		# 	defective_parts += engine.defective_part ? 1 : 0
+		# 	defective_parts += computer.defective_part ? 1 : 0
+		# else
+		# 	-1
+		# end
 	end
 
 	def check_car_build_stage
 
-		if seats.count == 2 && color != nil then
-			status = 3
-		elsif laser != nil && computer != nil then
-			status = 2
-		elsif wheels.count == 4 && chassis != nil && engine != nil then
-			status = 1
-		else
-			status = 0
-		end
+		# if seats.count == 2 && color != nil then
+		# 	status = 3
+		# elsif laser != nil && computer != nil then
+		# 	status = 2
+		# elsif wheels.count == 4 && chassis != nil && engine != nil then
+		# 	status = 1
+		# else
+		# 	status = 0
+		# end
 	
-		return	status
+		# return	status
 
 	end
 
 	def get_defective_parts
-		defective_parts = []
-		defective_parts << wheels.where( defective_part:true )
-		defective_parts << seats.where( defective_part:true )
-		if chassis.defective_part
-			defective_parts << chassis
-		end
-		if laser.defective_part
-			defective_parts << laser
-		end
-		if engine.defective_part
-			defective_parts << engine
-		end
-		if computer.defective_part
-			defective_parts << computer
-		end
-		return defective_parts
+		# defective_parts = []
+		# defective_parts << wheels.where( defective_part:true )
+		# defective_parts << seats.where( defective_part:true )
+		# if chassis.defective_part
+		# 	defective_parts << chassis
+		# end
+		# if laser.defective_part
+		# 	defective_parts << laser
+		# end
+		# if engine.defective_part
+		# 	defective_parts << engine
+		# end
+		# if computer.defective_part
+		# 	defective_parts << computer
+		# end
+		# return defective_parts
 	end
 
 end

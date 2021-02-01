@@ -11,9 +11,10 @@ class PaintNDetailsAssembly < AssemblyLine
 
 	def self.add_seats car
 		seats_amount = 2
-		probability = 3							# average defectiveness
-		defective = rand(1..100) < probability  # this line gives a probability of defective part creation
-		seats_amount.times { seat = Seat.create( brand:"Seat Brand", serial_number:Time.now.to_i, defective_part:defective, car:car ) }
+		seats_amount.times do |seat|
+			seat = ApplicationController.helpers.get_car_part( "seat", "Seat Brand" )
+			seat.update( :car => car  )
+		end
 	end
 
 	def self.paint car

@@ -10,22 +10,21 @@ class BasicAssembly < AssemblyLine
 	end
 
 	def self.add_chassis car
-		probability = 15						# average defectiveness
-		defective = rand(1..100) < probability  # this line gives a probability of defective part creation
-		chassis = Chassis.create( brand:"Chassis Brand", serial_number:Time.now.to_i, defective_part:defective, car:car )
+		chassis = ApplicationController.helpers.get_car_part( "chassis", "Chasis Brand" )
+		chassis.update( :car => car  )
 	end
 
 	def self.add_engine car
-		probability = 5							# average defectiveness
-		defective = rand(1..100) < probability  # this line gives a probability of defective part creation
-		engine = Engine.create( brand:"Motor Brand", serial_number:Time.now.to_i, defective_part:defective, car:car )
+		engine = ApplicationController.helpers.get_car_part( "engine", "Engine Brand" )
+		engine.update( :car => car  )
 	end
 
 	def self.add_wheels car
 		wheels_amount = 4
-		probability = 3							# average defectiveness
-		defective = rand(1..100) < probability  # this line gives a probability of defective part creation
-		wheels_amount.times { wheel = Wheel.create( brand:"Wheel Brand", serial_number:Time.now.to_i, defective_part:defective, car:car ) }
+		wheels_amount.times do |wheel| 
+			wheel = ApplicationController.helpers.get_car_part( "wheel", "Wheel Brand" )
+			wheel.update( :car => car  )
+		end
 	end
 
 end
