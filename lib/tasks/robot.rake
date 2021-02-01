@@ -47,21 +47,16 @@ namespace :robot do
 			uninspected_cars = WareHouse.get_uninspected_cars
 
 			uninspected_cars.each do |car|
-				if car.check_computer == -1 then  	# it means that the car isn't finished
-					car.update( storage:nil )		# send it back to "in_progress"
-
-				elsif car.check_computer == 0 then	# it means the car passed the test
-					car.update( storage:2 )  # putting storage == 2 instead of 3 to simulate 2 different stocks (warehouse and saleroom)
-				
-				else
-					car.update( storage:1 )			# it means the car has at least 1 defect
-
-					reject_message = "BUILDER  | => The car " + car.to_json + "has defects"		
-
-					puts reject_message
-					# send_car data to slack
-					# notifier.ping reject_message
-
+				uninspected_cars.each do |car|
+					if car.check_computer.empty?
+						car.update(  :storage => "approved" )
+					else
+						car.update(  :storage => "rejected" )
+						reject_message = "BUILDER  | => The car " + car.to_json + "has defects"		
+						puts reject_message
+						# send_car data to slack
+						# notifier.ping reject_message
+					end
 				end
 			end
 			uninspected_cars = []	# empty array to save memory
@@ -74,12 +69,20 @@ namespace :robot do
 			# Move aproved cars to salesroom
 			approved_cars = WareHouse.get_approved_cars
 
+
+			# to give movement to the cars
+			#  set them as "in transit" while loading them on the truck and move them to the  store
 			approved_cars.each do |car| 
-				car.update( storage:3 )
+				car.update( :storage =>  "in transit" )
+			end
+
+			moving_cars = Car.in_transit
+			moving_cars.each do |car| 
+				car.update( :storage =>  "on sale" )
 			end
 
 			approved_cars = []	# empty array to save memory
-			# puts "moved cars"
+			moving_cars = []	# empty array to save memory
 
 		end
 	end
@@ -98,21 +101,23 @@ namespace :robot do
 			qty_to_buy = rand(1..max_cars_allowed_to_buy)
 
 			qty_to_buy.times do
-				model_to_buy = rand(1..10)
-				car_to_buy = SalesRoom.get_a_car_by_model_id model_to_buy
 
-				if car_to_buy != nil
+				models_qty = Model.all.count
+				model_to_buy = Model.all[ rand( 0...models_qty ) ]
+
+				car_to_buy = SalesRoom.get_a_car_by_model_id model_to_buy.id
+
+				unless car_to_buy.blank?
 					# if the car exists robot will buy it
 					SalesRoom.create_order car_to_buy, robot_buyer_id
 					# puts "Car buyed " + car_to_buy.model.name
 				else
-					mod = Model.where( :id => model_to_buy ).first
-					puts "BUY      | At "+ Time.now.to_s + " Robot buyer id=" + robot_buyer_id.to_s + " tryed to buy a " + mod.name + " but there wasn't any on stock" 
+					puts "BUY      | At "+ Time.now.to_s + " Robot buyer id=" + robot_buyer_id.to_s + " tryed to buy a " + model_to_buy.name + " but there wasn't any on stock" 
 
 					# Search the car on factory stock
-					car_to_reserve = Car.by_model_id( model_to_buy ).approved.not_reserved.first
+					car_to_reserve = Car.by_model_id( model_to_buy.id ).approved.not_reserved.first
 
-					if car_to_reserve != nil
+					unless car_to_reserve.blank?
 						SalesRoom.create_reservation car_to_reserve, robot_buyer_id
 					end
 
@@ -142,14 +147,14 @@ namespace :robot do
 
 				new_car = SalesRoom.get_a_car_by_model_id new_model
 
-				if new_car != nil # there is a car abailable for change
+				unless new_car.blank? # there is a car abailable for change
 					
 					#cancel the old order
 					change_order = ChangeOrder.new order:order_to_be_canceled
 					change_order.save
 					
 					#set the car ready for sale
-					car_to_be_changed.storage = 3
+					car_to_be_changed.update( :storage => "on sale" )
 
 					# buy the new car
 					SalesRoom.create_order new_car, robot_buyer_id
@@ -159,13 +164,13 @@ namespace :robot do
 					# if there isn't any car of the required model system will look for it on factory stock
 					car_to_reserve = Car.by_model_id( new_model ).approved.not_reserved.first
 
-					if car_to_reserve != nil # there is a car of this model on factory stock
+					unless car_to_reserve.blank? # there is a car of this model on factory stock
 
 						#cancel the old order
 						change_order = ChangeOrder.new order:order_to_be_canceled
 						change_order.save
 						#set the car ready for sale
-						car_to_be_changed.storage = 3
+						car_to_be_changed.update( :storage => "on sale" )
 						#reserve the new car
 						SalesRoom.create_reservation car_to_reserve, robot_buyer_id
 						puts "CHANGE   | Car #{car_to_be_changed.id} changed by Car #{car_to_reserve.id}"
@@ -189,7 +194,7 @@ namespace :robot do
 
 		reservations.each do |res|
 			reserved_car = Car.find( res.car_id )
-			if reserved_car.storage == 3 # means it is on store
+			if reserved_car.storage == "on sale" # means it is on store
 				SalesRoom.create_order reserved_car, res.buyer
 				res.update( delivered:true )
 			end
@@ -218,7 +223,7 @@ namespace :robot do
 		sold_cars = orders.count - change_orders.count
 
 		#calculate average (avoid divide by 0)
-		if sold_cars != 0 && sold_cars != nil
+		unless sold_cars == 0 || sold_cars.blank?
 			average = revenue/sold_cars
 		else
 			average = 0
@@ -237,7 +242,7 @@ namespace :robot do
 
 		cars_to_repair.each do | item_car |
 
-			parts_to_repair = item_car.get_defective_parts
+			parts_to_repair = item_car.check_computer
 
 			parts_to_repair.each do | item_part |
 			
@@ -247,7 +252,7 @@ namespace :robot do
 			
 			end
 
-			item_car.update( storage:0 )
+			item_car.update( :storage => "uninspected" )
 
 			puts "REPAIRER | Tha Car "+item_car.to_s+" has been repaired"
 				 

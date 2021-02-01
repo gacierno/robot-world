@@ -23,7 +23,7 @@ class PaintNDetailsAssembly < AssemblyLine
 	end
 
 	def self.set_car_as_uninspected car
-		car.update( storage:0 )
+		car.update( :storage => "uninspected" )
 	end
 
 end
