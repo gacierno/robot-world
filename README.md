@@ -87,7 +87,7 @@ Running this project under a docker environment allows new users ( or reviewers 
 `$ docker-compose up`
 
 ## Class diagram
-![alt text](https://github.com/gacierno/robot-world/blob/Add-data-to-readme-file/UML.png "Class Diagram")  
+![alt text](https://github.com/gacierno/robot-world/blob/Fixes-and-updates/UML.png "Class Diagram")  
 
 + Red represents **Initial Structure**
 + Blue represents classes and methods added to solve **The Problem**
